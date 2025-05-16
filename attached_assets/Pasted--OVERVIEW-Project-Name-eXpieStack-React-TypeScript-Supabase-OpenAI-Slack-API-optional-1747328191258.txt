@@ -1,0 +1,258 @@
+🚀 OVERVIEW
+
+Project Name: eXpieStack: React + TypeScript + Supabase + OpenAI + Slack API + optional Coda/Gmail integrationsTarget Users: Real estate agents, teams, and staff using Slack, Gmail, and meeting tools
+
+🔐 AUTHENTICATION
+
+Use Supabase Auth (email/password)
+
+Require email confirmation on signup
+
+Store user profile in users table:
+
+id (UUID)
+
+email
+
+mode (hype, zen, chaos, focus)
+
+onboarding_complete (boolean)
+
+🧭 ROUTES / VIEWS
+
+Route
+
+Description
+
+/
+
+Landing page + sign in / sign up
+
+/onboarding
+
+Connect tools + pick personality
+
+/dashboard
+
+Main productivity hub
+
+/automations
+
+Manage automations
+
+/leaderboard
+
+View badges, time saved rankings
+
+/accessibility
+
+Preferences for text/contrast/motion
+
+⚙️ DATABASE SCHEMA
+
+users
+
+id, email, mode, onboarding_complete
+
+connected_tools
+
+id, user_id, tool_name, status, connected_at
+
+canned_responses
+
+id, user_id, title, content, tags, usage_count, created_at
+
+action_items
+
+id, user_id, text, status, transcript, created_at
+
+action_item_outputs
+
+id, user_id, action_item_id, output, tool_used, created_at
+
+automations
+
+id, user_id, trigger_type, action, tool, is_enabled, last_run, created_at
+
+time_saved
+
+id, user_id, action_type, minutes_saved, created_at
+
+user_achievements
+
+id, user_id, badge, earned_at
+
+🧩 FEATURE REQUIREMENTS
+
+✅ Onboarding
+
+Prompt user to connect:
+
+Slack
+
+Gmail
+
+Fireflies
+
+Google Calendar
+
+LearnWorlds
+
+Coda
+
+ChatGPT (OpenAI key)
+
+Choose a mode (Hype, Zen, Chaos, Focus)
+
+Save to users and connected_tools
+
+✅ Canned Responses
+
+Create, tag, edit, delete
+
+Copy to clipboard
+
+Use in Slack by tag (via /expie canned [tag])
+
+Save to canned_responses
+
+Seeded Examples:
+
+When is the next FastCAP?
+
+Weekly Check-In Format
+
+Client Follow-Up Nudge
+
+✅ Action Items + GPT Integration
+
+Extract from transcript or paste
+
+Add button: "Use AI to Start This Task"
+
+Send transcript + action item to OpenAI
+
+Display GPT response inline
+
+Buttons: [Copy] [Edit] [Send via Gmail]
+
+Save to action_item_outputs
+
+✅ Automations
+
+Create Trigger → Action
+
+Toggle on/off
+
+Log time saved when triggered
+
+Save to automations
+
+Suggested Preloaded:
+
+Weekly follow-up via Slack
+
+Auto-tag Fireflies tasks with #client
+
+✅ Time Saved Tracking
+
+Every feature interaction logs time:
+
+Canned response: +1 min
+
+Automation: +3–5 min
+
+Action item: +2 min
+
+GPT draft: +2 min
+
+Store in time_saved
+
+Display on dashboard (daily/weekly)
+
+Toast on save: “🎉 You just saved X minutes!”
+
+✅ Leaderboard + Achievements
+
+Sort users by time saved
+
+Show badges:
+
+Loop Slayer (10 responses used)
+
+Automation Hero (5 automations run)
+
+Time Wizard (100+ minutes saved)
+
+Store in user_achievements
+
+✅ Personality Mode Selector
+
+Modes: Hype, Zen, Chaos, Focus
+
+Save to users.mode
+
+Change UI style based on mode
+
+Show banner (auto-dismiss after 3s)
+
+✅ Accessibility
+
+Toggle for:
+
+Large text
+
+Dark mode
+
+Reduce motion
+
+High contrast
+
+Save per user (or use local storage fallback)
+
+🤖 API INTEGRATIONS
+
+OpenAI ChatGPT
+
+Endpoint: /v1/chat/completions
+
+Use for:
+
+Action item starter drafts
+
+Suggested responses (generate with AI)
+
+Slack
+
+Slash command support:
+
+/expie canned [tag]
+
+/expie tasks → lists current action items
+
+Webhook or bot output enabled
+
+Fireflies.ai
+
+Ingest transcripts via API or webhook
+
+Tag action items with transcript source
+
+Gmail / Google Calendar
+
+Send emails from GPT outputs
+
+Add calendar events for time-blocked action items
+
+🧪 TESTING & DEMO PREP
+
+Preload seeded data for canned responses + action items
+
+Auto-connect ChatGPT (mock key OK)
+
+Functional output must display when buttons are clicked
+
+Tool connects must update backend
+
+Time saved must update immediately per interaction
+
